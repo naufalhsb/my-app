@@ -60,6 +60,14 @@ function ResponsiveDrawer(props) {
               <ListItemText primary="Home" />
             </ListItemButton>
           </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <InboxIcon /> 
+              </ListItemIcon>
+              <ListItemText primary="About" />
+            </ListItemButton>
+          </ListItem>
       </List>
       <Divider />
     </div>
