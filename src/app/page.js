@@ -1,16 +1,28 @@
 import { Box, Button, FormControl, InputLabel, Input, FormHelperText } from "@mui/material"
+import { PrismaClient } from '@prisma/client'
 
-export default function Home() {
+export default async function Home() {
+  const prisma = new PrismaClient()
+  const users = await prisma.user.findMany()
+  
   return (
-    <Box>
-      <h1 className="mt-20">Login</h1>
-      <FormControl>
-        <InputLabel htmlFor="my-input">Email address</InputLabel>
-        <InputLabel htmlFor="my-input">Email address</InputLabel>
-        <Input id="my-input" aria-describedby="my-helper-text" />
-        <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
-      </FormControl>
-      <Button variant="contained">Submit</Button>
-    </Box>
+    <>
+    <table>
+      <thead>
+      <tr>
+        <td>Nama</td>
+        <td>Email</td>
+      </tr>
+      </thead>
+      <tbody>
+      {users.map((item, i)=> (
+      <tr>
+        <><td>{item.name}</td><td>{item.email}</td></>
+      </tr>
+      ))}  
+      </tbody>
+      </table>
+    
+    </>
   )
 }

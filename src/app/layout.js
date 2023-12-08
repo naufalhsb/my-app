@@ -19,6 +19,7 @@ export default function RootLayout({ children }) {
 }*/
 
 import * as React from 'react';
+import useEffect from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -65,7 +66,7 @@ function ResponsiveDrawer(props) {
               <ListItemIcon>
                 <InboxIcon /> 
               </ListItemIcon>
-              <ListItemText primary="about" />
+              <ListItemText primary="About" />
             </ListItemButton>
           </ListItem>
       </List>
@@ -159,5 +160,6 @@ ResponsiveDrawer.propTypes = {
    */
   window: PropTypes.func,
 };
+
 
 export default ResponsiveDrawer;
