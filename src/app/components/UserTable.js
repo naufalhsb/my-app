@@ -13,7 +13,7 @@ import { Modal, Typography } from "@mui/material";
 import { Action } from "./Action";
 import { state, useFormState } from "react-dom";
 import { useRouter } from 'next/navigation'
-import ActionDelete from "./ActionDelete"
+import { ActionDelete } from "./ActionDelete"
 
 const style = {
   position: "absolute",
@@ -49,7 +49,7 @@ export function UserTable({ post }) {
     const deletePost = (e) => {
         // console.log(e)
         // e.preventDefault()
-        formAction(e)
+        formActionDelete(e)
         router.push('/')
         setOpen(false)
     }
@@ -80,7 +80,7 @@ export function UserTable({ post }) {
                 <TableCell align="right">{item.jumlah}</TableCell>
                 <TableCell align="right">
                     <form action={deletePost}>
-                        <input type="hidden" value={item.id} />
+                        <input type="hidden" name="id" value={item.id} />
                     <Button type="submit">Delete</Button>
                     </form>
                 </TableCell>
