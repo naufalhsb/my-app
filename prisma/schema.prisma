@@ -19,7 +19,7 @@ model User {
 
 model Post {
   id          Int     @id @default(autoincrement())
-  nama_barang String
+  nama_barang String  @unique
   deskripsi   String
   merek       String
   jumlah      Int
