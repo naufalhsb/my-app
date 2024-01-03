@@ -63,8 +63,8 @@ export function UserTable({ post }) {
           <TableHead>
             <TableRow>
               <TableCell>Barang</TableCell>
-              <TableCell align="right">Merek</TableCell>
               <TableCell align="right">Jumlah</TableCell>
+              <TableCell align="right">Tanggal</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -74,10 +74,10 @@ export function UserTable({ post }) {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {item.nama_barang}
+                  {item.barang}
                 </TableCell>
-                <TableCell align="right">{item.merek}</TableCell>
                 <TableCell align="right">{item.jumlah}</TableCell>
+                <TableCell align="right">{item.tanggal.toLocaleDateString('en-GB')}</TableCell>
                 <TableCell align="right">
                     <form action={deletePost}>
                         <input type="hidden" name="id" value={item.id} />
@@ -103,24 +103,24 @@ export function UserTable({ post }) {
                   id="outlined-basic"
                   label="Barang"
                   variant="standard"
-                  name="nama_barang"
+                  name="barang"
                 />
               </Grid>
               <Grid item xs={4}>
                 <TextField
                   id="outlined-basic"
-                  label="Merek"
+                  label="jumlah"
                   variant="standard"
-                  name="merek"
+                  name="jumlah"
                 />
               </Grid>
               <Grid item xs={4}>
                 <TextField
                   type="number"
                   id="outlined-basic"
-                  label="Jumlah"
+                  label="tanggal"
                   variant="standard"
-                  name="jumlah"
+                  name="tanggal"
                 />
               </Grid>
               <Grid item xs={4}>

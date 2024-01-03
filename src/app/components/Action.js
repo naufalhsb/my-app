@@ -5,11 +5,10 @@ export async function Action(prevState, formData) {
   const prisma = new PrismaClient();
   await prisma.post.create({
     data: {
-      nama_barang: formData.get("nama_barang"),
-      merek: formData.get("merek"),
+      barang: formData.get("barang"),
       jumlah: parseInt(formData.get("jumlah")),
-      deskripsi: "",
-      adminId: 2,
+      tanggal: formData.get("tanggal"),
+      adminId: 1,
     },
   });
 }
