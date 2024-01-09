@@ -20,7 +20,6 @@ model post {
   barang  String   @db.VarChar(255)
   jumlah  String   @db.VarChar(225)
   tanggal DateTime @db.Date
-  merek   String   @db.VarChar(225)
   adminId Int
   admin   admin    @relation(fields: [adminId], references: [id], onUpdate: Restrict, map: "post_ibfk_1")
 

@@ -14,6 +14,7 @@ import { Action } from "./Action";
 import { state, useFormState } from "react-dom";
 import { useRouter } from 'next/navigation'
 import { ActionDelete } from "./ActionDelete"
+import { ActionUpdate } from "./ActionUpdate";
 
 const style = {
   position: "absolute",
@@ -35,16 +36,44 @@ const initialStage = {
 export function UserTable({ post }) {
     const router = useRouter()
     const [open, setOpen] = React.useState(false);
+   
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
     const [state, formAction] = useFormState(Action);
     const submit = (e) => {
         // console.log(e)
         // e.preventDefault()
         formAction(e)
         router.push('/')
-        setOpen(false)
+        handleClose()
     }
+
+    const [id_barang, setIdBarang] = React.useState(null)
+    const [nama_barang, setNamaBarang] = React.useState('')
+    const [jumlah, setJumlah] = React.useState(0)
+    const [tanggal, setTanggal] = React.useState("")
+    const [openUpdate, setOpenUpdate] = React.useState(false);
+
+    const handleOpenUpdate = (item) => {
+      setIdBarang(item.id)
+      setNamaBarang(item.barang)
+      setJumlah(item.jumlah)
+      let format_tanggal = item.tanggal.getFullYear() + "-" + parseInt(item.tanggal.getMonth())+1 + "-" + item.tanggal.getDate().toString().padStart(2, '0')
+      setTanggal(format_tanggal)
+      setOpenUpdate(true)
+    };
+    const handleCloseUpdate = () => setOpenUpdate(false);
+
+    const [stateUpdate, formActionUpdate] = useFormState(ActionUpdate);
+    const submitUpdate = (e) => {
+        // console.log(e)
+        // e.preventDefault()
+        formActionUpdate(e)
+        router.push('/')
+        handleCloseUpdate()
+    }
+
     const [stateActionDelete, formActionDelete] = useFormState(ActionDelete);
     const deletePost = (e) => {
         // console.log(e)
@@ -53,6 +82,7 @@ export function UserTable({ post }) {
         router.push('/')
         setOpen(false)
     }
+    
   return (
     <>
       <Button onClick={handleOpen} variant="contained">
@@ -73,12 +103,14 @@ export function UserTable({ post }) {
                 key={i}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
+                {/* <TableCell component="th" scope="row">
                   {item.barang}
-                </TableCell>
+                </TableCell> */}
+                <TableCell align="left">{item.barang}</TableCell>
                 <TableCell align="right">{item.jumlah}</TableCell>
                 <TableCell align="right">{item.tanggal.toLocaleDateString('en-GB')}</TableCell>
                 <TableCell align="right">
+                    <Button onClick={e => handleOpenUpdate(item)}>Update</Button>
                     <form action={deletePost}>
                         <input type="hidden" name="id" value={item.id} />
                     <Button type="submit">Delete</Button>
@@ -116,7 +148,56 @@ export function UserTable({ post }) {
               </Grid>
               <Grid item xs={4}>
                 <TextField
-                  type="number"
+                  type="date"
+                  id="outlined-basic"
+                  label="tanggal"
+                  variant="standard"
+                  name="tanggal"
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <Button type="submit">Simpan</Button>
+              </Grid>
+            </Grid>
+          </form>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={openUpdate}
+        onClose={handleCloseUpdate}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <form action={submitUpdate}>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <input type="hidden" name="id" value={id_barang} onChange={e => setIdBarang(e.target.value)} />
+                <TextField
+                  value={nama_barang}
+                  onChange={(event) => setNamaBarang(event.target.value)}
+                  id="outlined-basic"
+                  label="Barang"
+                  variant="standard"
+                  name="barang"
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  value={jumlah}
+                  onChange={(event) => setJumlah(event.target.value)}
+                  id="outlined-basic"
+                  label="jumlah"
+                  variant="standard"
+                  name="jumlah"
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  value={tanggal}
+                  onChange={(event) => setTanggal(event.target.value)}
+                  type="date"
                   id="outlined-basic"
                   label="tanggal"
                   variant="standard"
