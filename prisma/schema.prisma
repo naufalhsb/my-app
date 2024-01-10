@@ -16,12 +16,23 @@ model admin {
 }
 
 model post {
-  id      Int      @id @default(autoincrement())
-  barang  String   @db.VarChar(255)
-  jumlah  String   @db.VarChar(225)
-  tanggal DateTime @db.Date
-  adminId Int
-  admin   admin    @relation(fields: [adminId], references: [id], onUpdate: Restrict, map: "post_ibfk_1")
+  id        Int         @id @default(autoincrement())
+  barang    String      @db.VarChar(255)
+  tanggal   DateTime    @db.Date
+  adminId   Int
+  stock     Int
+  log_stock log_stock[]
+  admin     admin       @relation(fields: [adminId], references: [id], onUpdate: Restrict, map: "post_ibfk_1")
 
   @@index([adminId], map: "adminId")
+}
+
+model log_stock {
+  id      Int      @id @default(autoincrement())
+  post_id Int
+  jumlah  Int
+  tanggal DateTime @default(now()) @db.Date
+  post    post     @relation(fields: [post_id], references: [id], onDelete: Cascade, map: "log_stock_ibfk_1")
+
+  @@index([post_id], map: "post_id")
 }

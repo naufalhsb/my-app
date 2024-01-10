@@ -13,16 +13,19 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
+import BarChartIcon from "@mui/icons-material/BarChart";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const pathName = usePathname()
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -33,16 +36,30 @@ function ResponsiveDrawer(props) {
       <Toolbar />
       <Divider />
       <List>
-        {["Tabel", "Chart"].map((text, index) => (
-          <ListItem key={text} disablePadding>
+        <ListItem disablePadding sx={{
+          backgroundColor: pathName == '/' ? "rgba(0, 0, 0, .1)" : ""
+        }}>
+          <Link href={`/`} style={{width: '100%'}}>
             <ListItemButton>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <InboxIcon />
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={"Barang"} />
             </ListItemButton>
-          </ListItem>
-        ))}
+          </Link>
+        </ListItem>
+        <ListItem disablePadding sx={{
+          backgroundColor: pathName == '/chart' ? "rgba(0, 0, 0, .1)" : ""
+        }}>
+          <Link href={`/chart`} style={{width: '100%'}}>
+            <ListItemButton>
+              <ListItemIcon>
+                <BarChartIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Chart"} />
+            </ListItemButton>
+          </Link>
+        </ListItem>
       </List>
     </div>
   );
@@ -74,7 +91,7 @@ function ResponsiveDrawer(props) {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" noWrap component="div">
-                Responsive drawer
+                Gudang
               </Typography>
             </Toolbar>
           </AppBar>

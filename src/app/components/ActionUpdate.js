@@ -9,7 +9,6 @@ export async function ActionUpdate(prevState, formData) {
     },
     data: {
       barang: formData.get("barang"),
-      jumlah: formData.get("jumlah"),
       tanggal: new Date(formData.get("tanggal")).toISOString(),
       adminId: 1,
     },
